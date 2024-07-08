@@ -218,7 +218,7 @@ function endGame(reason) {
     }
 }
 
-resetGame();
+// resetGame();
 // dealerTurn();
 document.getElementById("play-btn").addEventListener("mousedown", resetGame);
 document.getElementById("replay-btn").addEventListener("mousedown", resetGame);

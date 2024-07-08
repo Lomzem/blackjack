@@ -7,12 +7,6 @@ const dCards = [];
 let curScore = 0;
 let dScore = 0;
 
-
-const hit_btn = document.getElementById("hit-btn");
-hit_btn.addEventListener("mousedown", () => {
-    addCard("user");
-})
-
 function updateScore(target) {
     if (target === "user") {
         let numA = 0;
@@ -220,6 +214,7 @@ function endGame(reason) {
 
 // resetGame();
 // dealerTurn();
+document.getElementById("hit-btn").addEventListener("mousedown", () => { addCard("user"); });
 document.getElementById("play-btn").addEventListener("mousedown", resetGame);
 document.getElementById("replay-btn").addEventListener("mousedown", resetGame);
 document.getElementById("stay-btn").addEventListener("mousedown", dealerTurn);

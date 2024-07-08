@@ -38,10 +38,7 @@ function updateScore(target) {
         scoreTitle.innerText = "Current Score: " + curScore;
 
         if (curScore > 21) {
-            const bust = document.getElementById("bust");
-            const choices = document.getElementById("choices");
-            choices.style.display = "none";
-            bust.style.display = "flex";
+            lostGame("bust");
         }
     }
     if (target === "dealer") {
@@ -106,7 +103,7 @@ function addCard(target) {
     }
 }
 
-function resetGame() {
+async function resetGame() {
     curScore = 0;
 
     while (dCards.length > 0) {
@@ -132,11 +129,16 @@ function resetGame() {
     startScreen.style.display = "none";
     main.style.display = "inline";
     choices.style.display = "flex";
-    bust.style.display = "none";
+    outcome.style.display = "none";
     dealer.style.display = "inline";
 
+    await sleep(1500);
     addCard("user");
+
+    await sleep(1500);
     addCard("user");
+
+    await sleep(1500);
     addCard("dealer");
 }
 
@@ -153,9 +155,34 @@ async function dealerTurn() {
 
     // notEnough = (dScore < curScore && dScore < 21);
     // dontWantTie = (dScore === curScore && dScore <= 16);
-    while ((dScore < curScore && dScore < 21) || (dScore === curScore && dScore <= 16)) {
+    // while ((dScore < curScore && dScore < 21) || (dScore === curScore && dScore <= 16)) {
+    while (dScore < curScore && dScore < 21) {
         await sleep(1500);
         addCard("dealer");
+    }
+
+    if (dScore > curScore) {
+        lostGame("lost");
+    }
+}
+
+function lostGame(reason) {
+    const outcome = document.getElementById("outcome");
+    const choices = document.getElementById("choices");
+    choices.style.display = "none";
+    outcome.style.display = "flex";
+
+    const outcomeText = document.getElementById("outcome-text");
+
+    if (reason === "bust") {
+        t1 = document.createElement("h1");
+        t1.innerHTML = "BUST!!";
+        t2 = document.createElement("h1");
+        t1.innerHTML = "You Lose!";
+        outcomeText.appendChild(t1);
+        outcomeText.appendChild(t2);
+    }
+    else if (reason === "lost") {
     }
 }
 

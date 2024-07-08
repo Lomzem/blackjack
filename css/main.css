@@ -1,0 +1,12 @@
+main {
+    display: none;
+}
+
+#cards {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    padding: 1.5em;
+}

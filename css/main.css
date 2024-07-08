@@ -1,6 +1,7 @@
 main {
     display: none;
     flex: 1;
+    min-width: 0;
 }
 
 .cards {
@@ -20,7 +21,7 @@ main {
 }
 
 #choices {
-    display: flex;
+    /* display: flex; */
     justify-content: center;
     padding: 2em;
     gap: 2em;

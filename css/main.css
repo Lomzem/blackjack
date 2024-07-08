@@ -44,7 +44,7 @@ main {
     padding: 0.75em;
 }
 
-#main-wrapper {
+#row-1 {
     display: flex;
     align-items: center;
     min-width: 0;
@@ -64,7 +64,7 @@ main {
     padding-bottom: 1em;
 }
 
-#sec-row {
+#row-2 {
     display: flex;
 }
 

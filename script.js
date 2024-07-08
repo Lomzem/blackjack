@@ -150,8 +150,11 @@ async function dealerTurn() {
     const dealer = document.getElementById("dealer");
 
     choices.style.display = "none";
-    while (dScore < curScore && dScore < 21) {
-        await sleep(1000);
+
+    // notEnough = (dScore < curScore && dScore < 21);
+    // dontWantTie = (dScore === curScore && dScore <= 16);
+    while ((dScore < curScore && dScore < 21) || (dScore === curScore && dScore <= 16)) {
+        await sleep(1500);
         addCard("dealer");
     }
 }

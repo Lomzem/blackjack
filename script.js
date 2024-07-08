@@ -105,6 +105,13 @@ function addCard(target) {
 
 async function resetGame() {
     curScore = 0;
+    dScore = 0;
+
+    const scoreTitle = document.getElementById("score-title");
+    scoreTitle.innerText = "Current Score Score: " + curScore;
+
+    const dscoreTitle = document.getElementById("dscore-title");
+    dscoreTitle.innerText = "Dealer Score: " + dScore;
 
     while (dCards.length > 0) {
         cardsArray.push(dCards.pop());
@@ -161,12 +168,16 @@ async function dealerTurn() {
         await sleep(1500);
         addCard("dealer");
     }
-
-    if (dScore > curScore) {
+    if (curScore > dScore || dScore > 21) {
+        console.log("Win");
+        endGame("win");
+    } else if (dScore > curScore && dScore <= 21) {
+        console.log("Lost");
         endGame("lost");
+    } else if (curScore === dScore) {
+        endGame("tie");
     }
 
-    else if (curScore > dScore)
 }
 
 function endGame(reason) {
@@ -176,6 +187,7 @@ function endGame(reason) {
     outcome.style.display = "flex";
 
     const outcomeText = document.getElementById("outcome-text");
+    outcomeText.innerHTML = "";
 
     if (reason === "bust") {
         t1 = document.createElement("h1");
@@ -189,10 +201,20 @@ function endGame(reason) {
         t1 = document.createElement("h1");
         t1.innerHTML = "Dealer Wins!";
         outcomeText.appendChild(t1);
-
         t2 = document.createElement("h1");
         t2.innerHTML = "You Lose!";
         outcomeText.appendChild(t2);
+    } else if (reason === "win") {
+        t1 = document.createElement("h1");
+        t1.innerHTML = "Congrats!";
+        outcomeText.appendChild(t1);
+        t2 = document.createElement("h1");
+        t2.innerHTML = "You Win!";
+        outcomeText.appendChild(t2);
+    } else if (reason === "tie") {
+        t1 = document.createElement("h1");
+        t1.innerHTML = "It's a Tie!";
+        outcomeText.appendChild(t1);
     }
 }
 

@@ -52,6 +52,7 @@ main {
 
 #dealer {
     /* display: none; */
+    min-width: 0;
     flex: 1;
 }
 

@@ -5,7 +5,7 @@ const curCards = [];
 const dCards = [];
 
 let curScore = 0;
-let dealerScore = 0;
+let dScore = 0;
 
 
 const hit_btn = document.getElementById("hit-btn");
@@ -140,12 +140,20 @@ function resetGame() {
     addCard("dealer");
 }
 
-function dealerTurn() {
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+async function dealerTurn() {
     const choices = document.getElementById("choices");
     const dealer = document.getElementById("dealer");
 
     choices.style.display = "none";
-
+    while (dScore < curScore && dScore < 21) {
+        await sleep(1000);
+        addCard("dealer");
+    }
 }
 
 resetGame();

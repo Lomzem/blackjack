@@ -15,13 +15,13 @@ function updateScore(target) {
             let firstChar = curCards[i].split("")[0];
             if (firstChar === "A") {
                 numA++
-                continue;
             }
-            if (isFinite(firstChar)) {
+            else if (isFinite(firstChar)) {
                 curScore += Number(firstChar);
-                continue;
             }
-            curScore += 10;
+            else {
+                curScore += 10;
+            }
         }
         curScore += numA * 1;
         while (numA > 0 && curScore + 10 <= 21) {
@@ -42,13 +42,13 @@ function updateScore(target) {
             let firstChar = dCards[i].split("")[0];
             if (firstChar === "A") {
                 numA++
-                continue;
             }
-            if (isFinite(firstChar)) {
+            else if (isFinite(firstChar)) {
                 dScore += Number(firstChar);
-                continue;
             }
-            dScore += 10;
+            else {
+                dScore += 10;
+            }
         }
         dScore += numA * 1;
         while (numA > 0 && dScore + 10 <= 21) {
@@ -57,11 +57,9 @@ function updateScore(target) {
         }
         const scoreTitle = document.getElementById("dscore-title");
         scoreTitle.innerText = "Dealer Score: " + dScore;
-
-        if (dScore > 21) {
-        }
     }
 }
+
 
 function addCard(target) {
     let cardsElem;
@@ -95,7 +93,7 @@ async function resetGame() {
     dScore = 0;
 
     const scoreTitle = document.getElementById("score-title");
-    scoreTitle.innerText = "Current Score Score: " + curScore;
+    scoreTitle.innerText = "Current Score: " + curScore;
 
     const dscoreTitle = document.getElementById("dscore-title");
     dscoreTitle.innerText = "Dealer Score: " + dScore;
@@ -114,7 +112,7 @@ async function resetGame() {
     const dcardsElem = document.getElementById("dcards");
     dcardsElem.innerHTML = "";
 
-    const bust = document.getElementById("bust");
+    const outcome = document.getElementById("outcome");
     const choices = document.getElementById("choices");
     const main = document.getElementById("main");
     const startScreen = document.getElementById("start-screen");
@@ -144,22 +142,19 @@ function sleep(ms) {
 
 async function dealerTurn() {
     const choices = document.getElementById("choices");
-    const dealer = document.getElementById("dealer");
 
     choices.style.display = "none";
 
     // notEnough = (dScore < curScore && dScore < 21);
     // dontWantTie = (dScore === curScore && dScore <= 16);
-    // while ((dScore < curScore && dScore < 21) || (dScore === curScore && dScore <= 16)) {
-    while (dScore <= curScore && dScore < 21) {
+    while ((dScore < curScore && dScore < 21) || (dScore === curScore && dScore <= 17)) {
+        // while (dScore <= curScore && dScore < 21) {
         await sleep(1500);
         addCard("dealer");
     }
     if (curScore > dScore || dScore > 21) {
-        console.log("Win");
         endGame("win");
     } else if (dScore > curScore && dScore <= 21) {
-        console.log("Lost");
         endGame("lost");
     } else if (curScore === dScore) {
         endGame("tie");

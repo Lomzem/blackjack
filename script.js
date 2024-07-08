@@ -64,37 +64,30 @@ function updateScore(target) {
 }
 
 function addCard(target) {
+    let cardsElem;
+    let hand;
+
     if (target === "user") {
-        const cards = document.getElementById("cards");
-        const cardImg = document.createElement("img");
-
-        let randIndex = Math.floor(Math.random() * cardsArray.length);
-        cardImg.src = "assets/cards/" + cardsArray[randIndex];
-        cardImg.classList.add("card");
-        cards.appendChild(cardImg);
-
-        curCards.push(cardsArray[randIndex]);
-        updateScore("user");
-
-        // remove card from array
-        let removed = cardsArray.splice(randIndex, 1);
-        discardedCards.push(removed);
+        cardsElem = document.getElementById("cards");
+        hand = curCards; // curCards is user's cards (in hand)
     }
+
     else if (target === "dealer") {
-        const dcardsElem = document.getElementById("dcards");
-        const cardImg = document.createElement("img");
-
-        let randIndex = Math.floor(Math.random() * cardsArray.length);
-        cardImg.src = "assets/cards/" + cardsArray[randIndex];
-        cardImg.classList.add("card");
-        dcardsElem.appendChild(cardImg);
-
-        dCards.push(cardsArray[randIndex]);
-        updateScore("dealer");
-
-        // remove card from array
-        let removed = cardsArray.splice(randIndex, 1);
+        cardsElem = document.getElementById("dcards");
+        hand = dCards; // dCards is dealer's cards (in hand)
     }
+
+    let randIndex = Math.floor(Math.random() * cardsArray.length);
+    cardImg = document.createElement("img");
+    cardImg.classList.add("card");
+    cardImg.src = "assets/cards/" + cardsArray[randIndex];
+
+    cardsElem.appendChild(cardImg);
+    hand.push(cardsArray[randIndex]);
+    updateScore(target);
+
+    let removedCard = cardsArray.splice(randIndex, 1)[0];
+    discardedCards.push(removedCard);
 }
 
 async function resetGame() {

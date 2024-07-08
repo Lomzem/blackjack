@@ -1,23 +1,22 @@
 main {
-    /* display: none; */
+    display: none;
+    flex: 1;
 }
 
-#cards {
+.cards {
     display: flex;
     justify-content: center;
-    width: 100vw;
     gap: 2em;
     padding: 2em;
 }
 
-#cards-wrapper {
+.cards-wrapper {
     height: 25em;
 }
 
 
 .card {
     min-width: 0;
-    flex-shrink: auto;
 }
 
 #choices {
@@ -25,13 +24,14 @@ main {
     justify-content: center;
     padding: 2em;
     gap: 2em;
-    /* display: none; */
+    display: none;
 }
 
 #bust {
     display: none;
     justify-content: center;
     gap: 2em;
+    padding: 3em;
 }
 
 #bust-text {
@@ -42,4 +42,32 @@ main {
 
 #replay-btn {
     padding: 0.75em;
+}
+
+#main-wrapper {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+
+#dealer {
+    /* display: none; */
+    flex: 1;
+}
+
+.score-title {
+    display: flex;
+    justify-content: center;
+    font-size: 2em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+#sec-row {
+    display: flex;
+}
+
+.sec-row {
+    width: 100%;
+    flex: 1;
 }

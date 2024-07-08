@@ -15,13 +15,24 @@
         <button id="play-btn" type="button">Play</button>
     </div>
 
-    <main id="main">
-        <h1 id="score-title">Current Score: 0</h1>
-        <div id="cards-wrapper">
-            <ul id="cards">
-            </ul>
+    <div id="main-wrapper">
+        <main id="main">
+            <h1 id="score-title" class="score-title">Current Score: 0</h1>
+            <div class="cards-wrapper">
+                <ul id="cards" class="cards">
+                </ul>
+            </div>
+        </main>
+        <div id="dealer">
+            <h1 id="dscore-title" class="score-title">Dealer Score: 0</h1>
+            <div class="cards-wrapper">
+                <ul id="dcards" class="cards">
+                </ul>
+            </div>
         </div>
-        <div id="choices">
+    </div>
+    <div id="sec-row">
+        <div id="choices" class="sec-row">
             <button id="hit-btn" type="button">Hit</button>
             <button id="stay-btn" type="button">Stay</button>
         </div>
@@ -32,8 +43,9 @@
             </div>
             <button id="replay-btn" type="button">Play Again</button>
         </div>
-    </main>
-
+        <div class="sec-row">
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 

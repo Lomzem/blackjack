@@ -23,7 +23,7 @@ function updateScore(target) {
                 curScore += 10;
             }
         }
-        curScore += numA * 1;
+        curScore += numA;
         while (numA > 0 && curScore + 10 <= 21) {
             curScore += 10;
             numA--;
@@ -106,6 +106,8 @@ async function resetGame() {
         cardsArray.push(curCards.pop());
     }
 
+    // remove card images
+
     const cards = document.getElementById("cards");
     cards.innerHTML = "";
 
@@ -142,7 +144,6 @@ function sleep(ms) {
 
 async function dealerTurn() {
     const choices = document.getElementById("choices");
-
     choices.style.display = "none";
 
     // notEnough = (dScore < curScore && dScore < 21);
@@ -179,6 +180,7 @@ function endGame(reason) {
         outcomeText.appendChild(t1);
         outcomeText.appendChild(t2);
     }
+
     else if (reason === "lost") {
         t1 = document.createElement("h1");
         t1.innerHTML = "Dealer Wins!";
@@ -186,22 +188,24 @@ function endGame(reason) {
         t2 = document.createElement("h1");
         t2.innerHTML = "You Lose!";
         outcomeText.appendChild(t2);
-    } else if (reason === "win") {
+    }
+
+    else if (reason === "win") {
         t1 = document.createElement("h1");
         t1.innerHTML = "Congrats!";
         outcomeText.appendChild(t1);
         t2 = document.createElement("h1");
         t2.innerHTML = "You Win!";
         outcomeText.appendChild(t2);
-    } else if (reason === "tie") {
+    }
+
+    else if (reason === "tie") {
         t1 = document.createElement("h1");
         t1.innerHTML = "It's a Tie!";
         outcomeText.appendChild(t1);
     }
 }
 
-// resetGame();
-// dealerTurn();
 document.getElementById("hit-btn").addEventListener("mousedown", () => { addCard("user"); });
 document.getElementById("play-btn").addEventListener("mousedown", resetGame);
 document.getElementById("replay-btn").addEventListener("mousedown", resetGame);

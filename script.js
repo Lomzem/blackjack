@@ -1,61 +1,61 @@
 const cardsArray = ['4H.svg', '3D.svg', '9S.svg', '2H.svg', '6S.svg', 'KC.svg', 'TC.svg', '5H.svg', '3S.svg', '7D.svg', 'JC.svg', 'JD.svg', 'AS.svg', 'TH.svg', '8C.svg', '6C.svg', '2D.svg', 'KD.svg', '4D.svg', 'KH.svg', '9H.svg', '3H.svg', '9C.svg', 'AD.svg', 'QC.svg', '7S.svg', '9D.svg', 'AH.svg', '8D.svg', 'JS.svg', '6D.svg', 'KS.svg', '5S.svg', 'TD.svg', '4C.svg', 'QS.svg', '2S.svg', '7C.svg', 'QD.svg', 'JH.svg', '8S.svg', 'AC.svg', '4S.svg', 'TS.svg', '5C.svg', '2C.svg', '5D.svg', '8H.svg', '3C.svg', 'QH.svg', '7H.svg', '6H.svg']
 
-const curCards = [];
-const dCards = [];
+const userCards = [];
+const dealerCards = [];
 
-let curScore = 0;
-let dScore = 0;
+let userScore = 0;
+let dealerScore = 0;
 
 function updateScore(target) {
     if (target === "user") {
         let numA = 0;
-        curScore = 0;
-        for (let i in curCards) {
-            let firstChar = curCards[i].split("")[0];
+        userScore = 0;
+        for (let i in userCards) {
+            let firstChar = userCards[i].split("")[0];
             if (firstChar === "A") {
                 numA++
             }
             else if (isFinite(firstChar)) {
-                curScore += Number(firstChar);
+                userScore += Number(firstChar);
             }
             else {
-                curScore += 10;
+                userScore += 10;
             }
         }
-        curScore += numA;
-        while (numA > 0 && curScore + 10 <= 21) {
-            curScore += 10;
+        userScore += numA;
+        while (numA > 0 && userScore + 10 <= 21) {
+            userScore += 10;
             numA--;
         }
         const scoreTitle = document.getElementById("score-title");
-        scoreTitle.innerText = "Current Score: " + curScore;
+        scoreTitle.innerText = "Current Score: " + userScore;
 
-        if (curScore > 21) {
+        if (userScore > 21) {
             endGame("bust");
         }
     }
     if (target === "dealer") {
         let numA = 0;
-        dScore = 0;
-        for (let i in dCards) {
-            let firstChar = dCards[i].split("")[0];
+        dealerScore = 0;
+        for (let i in dealerCards) {
+            let firstChar = dealerCards[i].split("")[0];
             if (firstChar === "A") {
                 numA++
             }
             else if (isFinite(firstChar)) {
-                dScore += Number(firstChar);
+                dealerScore += Number(firstChar);
             }
             else {
-                dScore += 10;
+                dealerScore += 10;
             }
         }
-        dScore += numA * 1;
-        while (numA > 0 && dScore + 10 <= 21) {
-            dScore += 10;
+        dealerScore += numA * 1;
+        while (numA > 0 && dealerScore + 10 <= 21) {
+            dealerScore += 10;
             numA--;
         }
         const scoreTitle = document.getElementById("dscore-title");
-        scoreTitle.innerText = "Dealer Score: " + dScore;
+        scoreTitle.innerText = "Dealer Score: " + dealerScore;
     }
 }
 
@@ -66,12 +66,12 @@ function addCard(target) {
 
     if (target === "user") {
         cardsElem = document.getElementById("cards");
-        hand = curCards; // curCards is user's cards (in hand)
+        hand = userCards; // userCards is user's cards (in hand)
     }
 
     else if (target === "dealer") {
         cardsElem = document.getElementById("dcards");
-        hand = dCards; // dCards is dealer's cards (in hand)
+        hand = dealerCards; // dCards is dealer's cards (in hand)
     }
 
     let randIndex = Math.floor(Math.random() * cardsArray.length);
@@ -87,30 +87,29 @@ function addCard(target) {
 }
 
 async function resetGame() {
-    curScore = 0;
-    dScore = 0;
+    userScore = 0;
+    dealerScore = 0;
 
     const scoreTitle = document.getElementById("score-title");
-    scoreTitle.innerText = "Current Score: " + curScore;
+    scoreTitle.innerText = "Current Score: " + userScore;
 
     const dscoreTitle = document.getElementById("dscore-title");
-    dscoreTitle.innerText = "Dealer Score: " + dScore;
+    dscoreTitle.innerText = "Dealer Score: " + dealerScore;
 
-    while (dCards.length > 0) {
-        cardsArray.push(dCards.pop());
+    while (dealerCards.length > 0) {
+        cardsArray.push(dealerCards.pop());
     }
 
-    while (curCards.length > 0) {
-        cardsArray.push(curCards.pop());
+    while (userCards.length > 0) {
+        cardsArray.push(userCards.pop());
     }
 
     // remove card images
+    const userCardsElem = document.getElementById("cards");
+    userCardsElem.innerHTML = "";
 
-    const cards = document.getElementById("cards");
-    cards.innerHTML = "";
-
-    const dcardsElem = document.getElementById("dcards");
-    dcardsElem.innerHTML = "";
+    const dealerCardsElem = document.getElementById("dcards");
+    dealerCardsElem.innerHTML = "";
 
     const outcome = document.getElementById("outcome");
     const choices = document.getElementById("choices");
@@ -144,18 +143,18 @@ async function dealerTurn() {
     const choices = document.getElementById("choices");
     choices.style.display = "none";
 
-    // notEnough = (dScore < curScore && dScore < 21);
-    // dontWantTie = (dScore === curScore && dScore <= 16);
-    while ((dScore < curScore && dScore < 21) || (dScore === curScore && dScore <= 17)) {
-        // while (dScore <= curScore && dScore < 21) {
+    // notEnough = (dealerScore < userScore && dealerScore < 21);
+    // dontWantTie = (dealerScore === userScore && dealerScore <= 16);
+    while ((dealerScore < userScore && dealerScore < 21) || (dealerScore === userScore && dealerScore <= 17)) {
+        // while (dealerScore <= userScore && dealerScore < 21) {
         await sleep(1500);
         addCard("dealer");
     }
-    if (curScore > dScore || dScore > 21) {
+    if (userScore > dealerScore || dealerScore > 21) {
         endGame("win");
-    } else if (dScore > curScore && dScore <= 21) {
+    } else if (dealerScore > userScore && dealerScore <= 21) {
         endGame("lost");
-    } else if (curScore === dScore) {
+    } else if (userScore === dealerScore) {
         endGame("tie");
     }
 

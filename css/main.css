@@ -33,7 +33,6 @@ main {
     justify-content: center;
     gap: 2em;
     padding: 3em;
-    padding-left: 5em;
 }
 
 #outcome-text {

@@ -9,6 +9,7 @@
 * {
     --bg: #1b4b4b;
     --red: #F76F8E;
+    --red-2: #de637f;
     --red-text: #EFF6EE:
 }
 
@@ -33,6 +34,7 @@ button {
 
 button:hover {
     cursor: pointer;
+    background: var(--red-2);
 }
 
 h1 {
